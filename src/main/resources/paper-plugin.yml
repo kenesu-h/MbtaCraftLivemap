@@ -1,0 +1,4 @@
+name: MbtaCraftLivemap
+version: '1.0-SNAPSHOT'
+main: io.github.kenesu_h.mbtaCraftLivemap.MbtaCraftLivemap
+api-version: '1.21'
