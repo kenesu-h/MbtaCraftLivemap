@@ -1,0 +1,10 @@
+api:
+  key: ${MBTA_API_KEY}
+canvas:
+  environment: "NORMAL"  # Allowed values: NORMAL, NETHER, THE_END, CUSTOM
+  origin:
+    x: 0
+    y: 64
+    z: 0
+  size: 256
+  direction: "NORTH"  # Allowed values: NORTH, SOUTH, EAST, WEST
