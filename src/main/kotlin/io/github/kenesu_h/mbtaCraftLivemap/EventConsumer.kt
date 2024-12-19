@@ -1,9 +1,11 @@
 package io.github.kenesu_h.mbtaCraftLivemap
 
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.Constants
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.ExternalEventType
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.VehicleDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.ExternalEventDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleExternalDto
+import java.net.URI
 import java.net.URL
 import java.util.concurrent.ConcurrentHashMap
 import java.util.logging.Logger
@@ -12,12 +14,12 @@ import kotlin.math.absoluteValue
 
 class EventConsumer(
     private val apiKey: String,
-    private val apiUrl: URL,
     private val logger: Logger
 ) {
     private val vehicles = ConcurrentHashMap<String, VehicleDto>()
 
     fun consume() {
+        val apiUrl = URI.create("${Constants.API_URL}/vehicles").toURL()
         val connection = (apiUrl.openConnection() as HttpsURLConnection).also {
             it.setRequestProperty("accept", "text/event-stream")
             it.setRequestProperty("x-api-key", apiKey)
@@ -83,7 +85,7 @@ class EventConsumer(
         }
     }
 
-    fun getVehicles(): Map<String, VehicleDto> {
-        return vehicles.toMap()
+    fun getVehicles(): List<VehicleDto> {
+        return vehicles.values.toList()
     }
 }

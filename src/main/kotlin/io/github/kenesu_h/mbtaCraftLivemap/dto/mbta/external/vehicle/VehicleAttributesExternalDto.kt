@@ -3,6 +3,8 @@ package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle
 import com.google.gson.annotations.SerializedName
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.CarriageDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.OccupancyStatus
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.RevenueStatus
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.VehicleStopStatus
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.CarriageExternalDto
 import java.time.ZonedDateTime
 
@@ -16,11 +18,11 @@ data class VehicleAttributesExternalDto(
     val label: String?,
     // For some odd reason, the field is named "revenue" on the event, but "revenue_status" in the Swagger docs
     @SerializedName("revenue")
-    val revenueStatus: String?,
+    val revenueStatus: RevenueStatus?,
     @SerializedName("updated_at")
     val updatedAt: ZonedDateTime?,
     @SerializedName("current_status")
-    val currentStatus: String?,
+    val currentStatus: VehicleStopStatus?,
     @SerializedName("current_stop_sequence")
     val currentStopSequence: Int?,
     @SerializedName("direction_id")
