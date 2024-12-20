@@ -113,14 +113,14 @@ class CanvasInteractListener(
         val currentStatus: VehicleStopStatus? = vehicle.currentStatus
         if (currentStatus != null) {
             component.decoratedSubtext("Status: ", TextDecoration.BOLD)
-                .subtext(formatCurrentStatus(currentStatus))
+                .subtext(getCurrentStatusText(currentStatus))
                 .newline()
         }
 
         val revenueStatus: RevenueStatus? = vehicle.revenueStatus
         if (revenueStatus != null) {
             component.decoratedSubtext("Accepting customers: ", TextDecoration.BOLD)
-                .subtext(formatRevenueStatus(revenueStatus))
+                .subtext(getRevenueStatusText(revenueStatus))
                 .newline()
         }
 
@@ -128,7 +128,7 @@ class CanvasInteractListener(
         if (occupancyStatus != null) {
             component.decoratedSubtext("Occupancy: ", TextDecoration.BOLD)
                 .coloredText(
-                    formatOccupancyStatus(occupancyStatus),
+                    getOccupancyStatusText(occupancyStatus),
                     getOccupancyStatusTextColor(occupancyStatus)
                 )
                 .newline()
@@ -163,7 +163,7 @@ class CanvasInteractListener(
                     .newline()
                     .decoratedSubtext("    - Occupancy: ", TextDecoration.BOLD)
                     .coloredText(
-                        formatOccupancyStatus(carriage.occupancyStatus),
+                        getOccupancyStatusText(carriage.occupancyStatus),
                         getOccupancyStatusTextColor(carriage.occupancyStatus)
                     )
                     .newline()
@@ -189,7 +189,7 @@ class CanvasInteractListener(
         }
     }
 
-    private fun formatCurrentStatus(currentStatus: VehicleStopStatus): String {
+    private fun getCurrentStatusText(currentStatus: VehicleStopStatus): String {
         return when (currentStatus) {
             VehicleStopStatus.INCOMING_AT -> "Arriving"
             VehicleStopStatus.STOPPED_AT -> "Standing"
@@ -197,14 +197,14 @@ class CanvasInteractListener(
         }
     }
 
-    private fun formatRevenueStatus(revenueStatus: RevenueStatus): String {
+    private fun getRevenueStatusText(revenueStatus: RevenueStatus): String {
         return when (revenueStatus) {
             RevenueStatus.REVENUE -> "Yes"
             RevenueStatus.NON_REVENUE -> "No"
         }
     }
 
-    private fun formatOccupancyStatus(occupancyStatus: OccupancyStatus): String {
+    private fun getOccupancyStatusText(occupancyStatus: OccupancyStatus): String {
         return when (occupancyStatus) {
             OccupancyStatus.MANY_SEATS_AVAILABLE -> "Many seats available"
             OccupancyStatus.FEW_SEATS_AVAILABLE -> "Few seats available"
