@@ -3,6 +3,9 @@ package io.github.kenesu_h.mbtaCraftLivemap
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasDirection
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasVehicleDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.*
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -44,20 +47,19 @@ class CanvasInteractListener(
             return
         }
 
-        val builder = StringBuilder()
-        vehicles.forEach { vehicle ->
-            builder.appendLine("§r")
-            builder.appendLine(formatVehicle(vehicle))
-        }
+        val components: MutableList<Component> = mutableListOf(Component.newline())
+        components.addAll(vehicles.map { formatVehicleAsComponent(it) })
 
-        builder.appendLine("§r")
-        if (vehicles.size == 1) {
-            builder.appendLine("There is ${vehicles.size} total vehicle at this location.")
+        val summary = if (vehicles.size == 1) {
+            "There is ${vehicles.size} total vehicle at this location."
         } else {
-            builder.appendLine("There are ${vehicles.size} total vehicles at this location.")
+            "There are ${vehicles.size} total vehicles at this location."
         }
+        components.add(Component.text(summary))
 
-        player.sendMessage(builder.toString())
+        components.forEach { component ->
+            player.sendMessage(component)
+        }
     }
 
     private fun isBlockInCanvas(block: Block): Boolean {
@@ -88,72 +90,97 @@ class CanvasInteractListener(
         }
     }
 
-    // TODO: Figure out a way to abstract out the formatting
-    private fun formatVehicle(vehicle: CanvasVehicleDto): String {
-        val builder = StringBuilder()
+    private fun formatVehicleAsComponent(vehicle: CanvasVehicleDto): Component {
+        val component = Component.text()
 
         val id: String = vehicle.id
-        builder.appendLine("§LVehicle ID:§r $id§7")
+        component.decoratedText("Vehicle ID: ", TextDecoration.BOLD)
+            .text(id)
+            .newline()
 
         val route: Route? = vehicle.route
         val direction: Int? = vehicle.directionId
         if (route != null && direction != null) {
-            builder.appendLine("§LRoute:§r§7 ${formatRoute(route)}§7 (§LDirection:§r§7 $direction)")
+            component.decoratedSubtext("Route: ", TextDecoration.BOLD)
+                .coloredText("${route.id} ", getRouteTextColor(route))
+                .subtext("(")
+                .decoratedSubtext("Direction: ", TextDecoration.BOLD)
+                .subtext(direction.toString())
+                .subtext(")")
+                .newline()
         }
 
         val currentStatus: VehicleStopStatus? = vehicle.currentStatus
         if (currentStatus != null) {
-            builder.appendLine("§LStatus:§r§7 ${formatCurrentStatus(currentStatus)}")
+            component.decoratedSubtext("Status: ", TextDecoration.BOLD)
+                .subtext(formatCurrentStatus(currentStatus))
+                .newline()
         }
 
         val revenueStatus: RevenueStatus? = vehicle.revenueStatus
         if (revenueStatus != null) {
-            builder.appendLine("§LAccepting customers:§r§7 ${formatRevenueStatus(revenueStatus)}")
+            component.decoratedSubtext("Accepting customers: ", TextDecoration.BOLD)
+                .subtext(formatRevenueStatus(revenueStatus))
+                .newline()
         }
 
         val occupancyStatus: OccupancyStatus? = vehicle.occupancyStatus
         if (occupancyStatus != null) {
-            builder.appendLine("§LOccupancy:§r§7 ${formatOccupancyStatus(occupancyStatus)}")
+            component.decoratedSubtext("Occupancy: ", TextDecoration.BOLD)
+                .subtext(formatOccupancyStatus(occupancyStatus))
+                .newline()
         }
 
         val speed: Double? = vehicle.speed
         if (speed != null) {
-            builder.appendLine("§LSpeed:§r§7 $speed m/s")
+            component.decoratedSubtext("Speed: ", TextDecoration.BOLD)
+                .subtext("$speed m/s")
+                .newline()
         }
 
         val latitude: Double? = vehicle.latitude
         val longitude: Double? = vehicle.longitude
         val bearing: Int? = vehicle.bearing
         if (latitude != null && longitude != null && bearing != null) {
-            builder.appendLine("§LCoordinates:§r§7 $latitude, $longitude (§LBearing:§r§7 $bearing°)")
+            component.decoratedSubtext("Coordinates: ", TextDecoration.BOLD)
+                .subtext("$latitude, $longitude ")
+                .subtext("(")
+                .decoratedSubtext("Bearing: ", TextDecoration.BOLD)
+                .subtext("$bearing°")
+                .subtext(")")
+                .newline()
         }
 
         val carriages: List<CarriageDto> = vehicle.carriages
         if (carriages.isNotEmpty()) {
-            builder.appendLine("§LCarriages:§r§7")
+            component.decoratedSubtext("Carriages:", TextDecoration.BOLD)
+                .newline()
             carriages.forEachIndexed { i, carriage ->
-                builder.appendLine("  - §LCarriage ${i + 1}:§r§7")
-                builder.appendLine("    - §LOccupancy:§r§7 ${formatOccupancyStatus(carriage.occupancyStatus)}")
+                component.decoratedSubtext("  - Carriage ${i + 1}:", TextDecoration.BOLD)
+                    .newline()
+                    .decoratedSubtext("    - Occupancy: ", TextDecoration.BOLD)
+                    .subtext(formatOccupancyStatus(carriage.occupancyStatus))
+                    .newline()
             }
         }
 
         val updatedAt: ZonedDateTime? = vehicle.updatedAt
         if (updatedAt != null) {
-            builder.appendLine("§LUpdated at:§r§7 $updatedAt")
+            component.decoratedSubtext("Updated at: ", TextDecoration.BOLD)
+                .subtext(updatedAt.toString())
+                .newline()
         }
 
-        return builder.toString()
+        return component.build()
     }
 
-    private fun formatRoute(route: Route): String {
-        val prefix: String = when (route) {
-            Route.RED, Route.MATTAPAN -> "§C"
-            Route.ORANGE -> "§6"
-            Route.GREEN_B, Route.GREEN_C, Route.GREEN_D, Route.GREEN_E -> "§A"
-            Route.BLUE -> "§9"
+    private fun getRouteTextColor(route: Route): NamedTextColor {
+        return when (route) {
+            Route.RED, Route.MATTAPAN -> NamedTextColor.RED
+            Route.ORANGE -> NamedTextColor.GOLD
+            Route.GREEN_B, Route.GREEN_C, Route.GREEN_D, Route.GREEN_E -> NamedTextColor.GREEN
+            Route.BLUE -> NamedTextColor.BLUE
         }
-
-        return "$prefix${route.id}§r"
     }
 
     private fun formatCurrentStatus(currentStatus: VehicleStopStatus): String {

@@ -6,7 +6,6 @@ import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.VehicleDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.ExternalEventDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleExternalDto
 import java.net.URI
-import java.net.URL
 import java.util.concurrent.ConcurrentHashMap
 import java.util.logging.Logger
 import javax.net.ssl.HttpsURLConnection

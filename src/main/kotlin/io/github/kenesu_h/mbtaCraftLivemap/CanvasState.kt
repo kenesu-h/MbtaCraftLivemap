@@ -6,10 +6,11 @@ import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.VehicleDto
 import java.util.logging.Logger
 
 class CanvasState(
-    private val size: Int,
+    size: Int,
     private val logger: Logger
 ) {
     var vehicles: List<CanvasVehicleDto> = emptyList()
+    private val normalizer = CoordinateNormalizer(size = size)
 
     fun getVehiclesAtPoint(x: Int, y: Int): List<CanvasVehicleDto> {
         val filtered: MutableList<CanvasVehicleDto> = mutableListOf()
@@ -20,7 +21,7 @@ class CanvasState(
             }
 
             if (
-                CircleHelper.isPointInCircle(x - vehicle.x!!, y - vehicle.y!!, Constants.VEHICLE_RADIUS)
+                CircleHelper.isPointInCircle(x - vehicle.x, y - vehicle.y, Constants.VEHICLE_RADIUS)
             ) {
                 filtered.add(vehicle)
             }
@@ -31,7 +32,21 @@ class CanvasState(
 
     fun updateVehicles(newVehicles: List<VehicleDto>) {
         vehicles = newVehicles.map {
-            CanvasVehicleDto(vehicle = it, canvasSize = size)
+            var x: Int? = null
+            if (it.longitude != null) {
+                x = normalizer.normalizeLongitude(it.longitude)
+            }
+
+            var y: Int? = null
+            if (it.latitude != null) {
+                y = normalizer.normalizeLatitude(it.latitude)
+            }
+
+            CanvasVehicleDto(
+                x = x,
+                y = y,
+                vehicle = it
+            )
         }
     }
 }

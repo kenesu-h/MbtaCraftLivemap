@@ -1,6 +1,5 @@
 package io.github.kenesu_h.mbtaCraftLivemap
 
-import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasVehicleDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.PluginConfigDto
 import io.github.kenesu_h.mbtaCraftLivemap.exception.MissingApiKeyException
 import org.bukkit.plugin.java.JavaPlugin
@@ -38,15 +37,6 @@ class MbtaCraftLivemap : JavaPlugin() {
         executor.submit { consumer.consume() }
 
         state = CanvasState(size = pluginConfig.size, logger = logger)
-        renderer = CanvasRenderer(
-            world = world,
-            originX = pluginConfig.originX,
-            originY = pluginConfig.originY,
-            originZ = pluginConfig.originZ,
-            size = pluginConfig.size,
-            direction = pluginConfig.direction,
-            logger = logger
-        )
 
         server.pluginManager.registerEvents(
             CanvasInteractListener(
@@ -58,6 +48,16 @@ class MbtaCraftLivemap : JavaPlugin() {
                 state = state,
             ),
             this
+        )
+
+        renderer = CanvasRenderer(
+            world = world,
+            originX = pluginConfig.originX,
+            originY = pluginConfig.originY,
+            originZ = pluginConfig.originZ,
+            size = pluginConfig.size,
+            direction = pluginConfig.direction,
+            logger = logger
         )
 
         server.scheduler.runTaskTimer(
