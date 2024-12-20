@@ -1,8 +1,6 @@
 package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle
 
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.OccupancyStatus
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.Route
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.VehicleDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.*
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.relationship.RelationshipDataExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.relationship.RelationshipExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.relationship.RelationshipLinksExternalDto
@@ -54,14 +52,14 @@ val vehicle = VehicleExternalDto(
     id = "",
     attributes = VehicleAttributesExternalDto(
         occupancyStatus = OccupancyStatus.MANY_SEATS_AVAILABLE,
-        speed = 0,
+        speed = 0.0,
         latitude = 0.0,
         bearing = 0,
         longitude = 0.0,
         label = "",
-        revenueStatus = "",
+        revenueStatus = RevenueStatus.REVENUE,
         updatedAt = ZonedDateTime.of(2024, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC),
-        currentStatus = "",
+        currentStatus = VehicleStopStatus.STOPPED_AT,
         currentStopSequence = 0,
         directionId = 0,
         carriages = emptyList()
@@ -70,21 +68,21 @@ val vehicle = VehicleExternalDto(
 val vehicleDto = VehicleDto(
     id = "",
     occupancyStatus = OccupancyStatus.MANY_SEATS_AVAILABLE,
-    speed = 0,
+    speed = 0.0,
     latitude = 0.0,
     bearing = 0,
     longitude = 0.0,
     label = "",
-    revenueStatus = "",
+    revenueStatus = RevenueStatus.REVENUE,
     updatedAt = ZonedDateTime.of(2024, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC),
-    currentStatus = "",
+    currentStatus = VehicleStopStatus.STOPPED_AT,
     currentStopSequence = 0,
     directionId = 0,
     carriages = emptyList(),
     route = Route.RED
 )
 
-val vehicleAttributesWithoutCarriages = vehicle.attributes.copy(carriages = null)
+val vehicleAttributesWithoutCarriages = vehicle.attributes!!.copy(carriages = null)
 val vehicleWithoutCarriages = vehicle.copy(attributes = vehicleAttributesWithoutCarriages)
 val vehicleDtoWithoutCarriages = vehicleDto.copy(carriages = emptyList())
 

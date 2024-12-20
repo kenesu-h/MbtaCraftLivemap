@@ -1,6 +1,8 @@
 package io.github.kenesu_h.mbtaCraftLivemap
 
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.OccupancyStatus
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.RevenueStatus
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.VehicleStopStatus
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.CarriageExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.ExternalEventDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.ExternalEventType
@@ -57,9 +59,9 @@ val resetEvent = ExternalEventDto(
                 bearing = 304,
                 longitude = -71.05154898,
                 label = "1454",
-                revenueStatus = "REVENUE",
+                revenueStatus = RevenueStatus.REVENUE,
                 updatedAt = ZonedDateTime.of(2024, 12, 18, 13, 1, 33, 0, ZoneOffset.ofHours(-5)),
-                currentStatus = "IN_TRANSIT_TO",
+                currentStatus = VehicleStopStatus.IN_TRANSIT_TO,
                 currentStopSequence = 29,
                 directionId = 0,
                 carriages = emptyList()
@@ -106,9 +108,9 @@ val updateEvent = ExternalEventDto(
                 bearing = 240,
                 longitude = -71.0771,
                 label = "3631-3851",
-                revenueStatus = "REVENUE",
+                revenueStatus = RevenueStatus.REVENUE,
                 updatedAt = ZonedDateTime.of(2024, 12, 18, 13, 1, 30, 0, ZoneOffset.ofHours(-5)),
-                currentStatus = "STOPPED_AT",
+                currentStatus = VehicleStopStatus.STOPPED_AT,
                 currentStopSequence = 110,
                 directionId = 0,
                 carriages = listOf(
