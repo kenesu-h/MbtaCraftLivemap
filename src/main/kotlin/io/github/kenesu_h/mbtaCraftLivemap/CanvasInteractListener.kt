@@ -127,7 +127,10 @@ class CanvasInteractListener(
         val occupancyStatus: OccupancyStatus? = vehicle.occupancyStatus
         if (occupancyStatus != null) {
             component.decoratedSubtext("Occupancy: ", TextDecoration.BOLD)
-                .subtext(formatOccupancyStatus(occupancyStatus))
+                .coloredText(
+                    formatOccupancyStatus(occupancyStatus),
+                    getOccupancyStatusTextColor(occupancyStatus)
+                )
                 .newline()
         }
 
@@ -159,7 +162,10 @@ class CanvasInteractListener(
                 component.decoratedSubtext("  - Carriage ${i + 1}:", TextDecoration.BOLD)
                     .newline()
                     .decoratedSubtext("    - Occupancy: ", TextDecoration.BOLD)
-                    .subtext(formatOccupancyStatus(carriage.occupancyStatus))
+                    .coloredText(
+                        formatOccupancyStatus(carriage.occupancyStatus),
+                        getOccupancyStatusTextColor(carriage.occupancyStatus)
+                    )
                     .newline()
             }
         }
@@ -207,6 +213,18 @@ class CanvasInteractListener(
             OccupancyStatus.FULL -> "Full"
             OccupancyStatus.NOT_ACCEPTING_PASSENGERS -> "Not accepting passengers"
             OccupancyStatus.NO_DATA_AVAILABLE -> "No data available"
+        }
+    }
+
+    private fun getOccupancyStatusTextColor(occupancyStatus: OccupancyStatus): NamedTextColor {
+        return when (occupancyStatus) {
+            OccupancyStatus.MANY_SEATS_AVAILABLE -> NamedTextColor.GREEN
+            OccupancyStatus.FEW_SEATS_AVAILABLE -> NamedTextColor.YELLOW
+            OccupancyStatus.STANDING_ROOM_ONLY -> NamedTextColor.GOLD
+            OccupancyStatus.CRUSHED_STANDING_ROOM_ONLY -> NamedTextColor.RED
+            OccupancyStatus.FULL -> NamedTextColor.DARK_RED
+            OccupancyStatus.NOT_ACCEPTING_PASSENGERS -> NamedTextColor.GRAY
+            OccupancyStatus.NO_DATA_AVAILABLE -> NamedTextColor.GRAY
         }
     }
 }
