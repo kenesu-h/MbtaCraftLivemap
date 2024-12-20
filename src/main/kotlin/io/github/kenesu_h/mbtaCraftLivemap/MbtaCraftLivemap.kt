@@ -9,8 +9,8 @@ import org.bukkit.World.Environment
 import java.util.concurrent.Executors
 
 class MbtaCraftLivemap : JavaPlugin() {
-    private lateinit var pluginConfig: PluginConfigDto
     private val executor = Executors.newSingleThreadExecutor()
+    private lateinit var pluginConfig: PluginConfigDto
     private lateinit var state: CanvasState
     private lateinit var renderer: CanvasRenderer
 

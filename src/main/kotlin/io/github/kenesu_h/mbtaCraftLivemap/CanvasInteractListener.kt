@@ -20,7 +20,7 @@ class CanvasInteractListener(
     private val originZ: Int,
     private val size: Int,
     private val direction: CanvasDirection,
-    private var state: CanvasState,
+    private val state: CanvasState,
 ) : Listener {
     @EventHandler
     fun onPlayerInteract(event: PlayerInteractEvent) {
@@ -48,7 +48,7 @@ class CanvasInteractListener(
         }
 
         val components: MutableList<Component> = mutableListOf(Component.newline())
-        components.addAll(vehicles.map { formatVehicleAsComponent(it) })
+        components.addAll(vehicles.map { formatVehicleComponent(it) })
 
         val summary = if (vehicles.size == 1) {
             "There is ${vehicles.size} total vehicle at this location."
@@ -90,7 +90,7 @@ class CanvasInteractListener(
         }
     }
 
-    private fun formatVehicleAsComponent(vehicle: CanvasVehicleDto): Component {
+    private fun formatVehicleComponent(vehicle: CanvasVehicleDto): Component {
         val component = Component.text()
 
         val id: String = vehicle.id
