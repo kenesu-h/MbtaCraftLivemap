@@ -11,5 +11,5 @@ object Constants {
     const val VEHICLE_RADIUS = 2
     const val ROUTE_WEIGHT = 1
 
-    val BACKGROUND_MATERIAL = Material.WHITE_CONCRETE
+    val BACKGROUND_MATERIAL = Material.GRAY_CONCRETE
 }

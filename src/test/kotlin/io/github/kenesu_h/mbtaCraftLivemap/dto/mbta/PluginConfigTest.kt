@@ -1,5 +1,6 @@
 package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta
 
+import io.github.kenesu_h.mbtaCraftLivemap.dto.PluginConfigDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasDirection
 import io.github.kenesu_h.mbtaCraftLivemap.exception.MissingApiKeyException
 import io.mockk.every

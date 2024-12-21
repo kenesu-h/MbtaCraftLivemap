@@ -1,9 +1,14 @@
 package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle
 
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.*
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.LinksExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.relationship.RelationshipDataExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.relationship.RelationshipExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.relationship.RelationshipLinksExternalDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.Route
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.OccupancyStatus
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.RevenueStatus
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleStopStatus
 
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -46,7 +51,7 @@ val vehicle = VehicleExternalDto(
             ),
         ),
     ),
-    links = VehicleLinksExternalDto(
+    links = LinksExternalDto(
         self = ""
     ),
     id = "",
@@ -69,9 +74,8 @@ val vehicleDto = VehicleDto(
     id = "",
     occupancyStatus = OccupancyStatus.MANY_SEATS_AVAILABLE,
     speed = 0.0,
-    latitude = 0.0,
+    coordinates = Pair(0.0, 0.0),
     bearing = 0,
-    longitude = 0.0,
     label = "",
     revenueStatus = RevenueStatus.REVENUE,
     updatedAt = ZonedDateTime.of(2024, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC),

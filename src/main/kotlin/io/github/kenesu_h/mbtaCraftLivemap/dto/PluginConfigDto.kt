@@ -1,4 +1,4 @@
-package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta
+package io.github.kenesu_h.mbtaCraftLivemap.dto
 
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasDirection
 import io.github.kenesu_h.mbtaCraftLivemap.exception.MissingApiKeyException

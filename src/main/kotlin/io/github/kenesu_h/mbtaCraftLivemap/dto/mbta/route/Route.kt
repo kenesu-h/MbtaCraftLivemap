@@ -1,4 +1,4 @@
-package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta
+package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route
 
 enum class Route(val id: String) {
     RED("Red"),
