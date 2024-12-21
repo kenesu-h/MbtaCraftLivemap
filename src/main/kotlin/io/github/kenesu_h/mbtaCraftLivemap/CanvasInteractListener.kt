@@ -1,8 +1,14 @@
 package io.github.kenesu_h.mbtaCraftLivemap
 
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasDirection
+import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasRouteDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasVehicleDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.*
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.Route
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.OccupancyStatus
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.RevenueStatus
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.RouteType
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleStopStatus
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
@@ -34,31 +40,26 @@ class CanvasInteractListener(
             return
         }
 
-        val canvasX: Int = when (direction) {
-            CanvasDirection.NORTH -> originZ - block.z
-            CanvasDirection.SOUTH -> block.z - originZ
-            CanvasDirection.EAST -> block.x - originX
-            CanvasDirection.WEST -> originX - block.x
-        }
-        val canvasY: Int = block.y - originY
+        val canvasPoint: Pair<Int, Int> = Pair(
+            when (direction) {
+                CanvasDirection.NORTH -> originZ - block.z
+                CanvasDirection.SOUTH -> block.z - originZ
+                CanvasDirection.EAST -> block.x - originX
+                CanvasDirection.WEST -> originX - block.x
+            },
+            block.y - originY
+        )
 
-        val vehicles: List<CanvasVehicleDto> = state.getVehiclesAtPoint(canvasX, canvasY)
-        if (vehicles.isEmpty()) {
+        val vehicles: List<CanvasVehicleDto> = state.getVehiclesAtPoint(canvasPoint)
+        if (vehicles.isNotEmpty()) {
+            handleVehiclesInteract(player, vehicles)
             return
         }
 
-        val components: MutableList<Component> = mutableListOf(Component.newline())
-        components.addAll(vehicles.map { formatVehicleComponent(it) })
-
-        val summary = if (vehicles.size == 1) {
-            "There is ${vehicles.size} total vehicle at this location."
-        } else {
-            "There are ${vehicles.size} total vehicles at this location."
-        }
-        components.add(Component.text(summary))
-
-        components.forEach { component ->
-            player.sendMessage(component)
+        val routes: List<CanvasRouteDto> = state.getRoutesAtPoint(canvasPoint)
+        if (routes.isNotEmpty()) {
+            handleRoutesInteract(player, routes)
+            return
         }
     }
 
@@ -87,6 +88,22 @@ class CanvasInteractListener(
                         block.y in originY until (originY + size) &&
                         block.z == originZ
             }
+        }
+    }
+
+    private fun handleVehiclesInteract(player: Player, vehicles: List<CanvasVehicleDto>) {
+        val components: MutableList<Component> = mutableListOf(Component.newline())
+        components.addAll(vehicles.map { formatVehicleComponent(it) })
+
+        val summary = if (vehicles.size == 1) {
+            "There is ${vehicles.size} total vehicle at this location."
+        } else {
+            "There are ${vehicles.size} total vehicles at this location."
+        }
+        components.add(Component.text(summary))
+
+        components.forEach { component ->
+            player.sendMessage(component)
         }
     }
 
@@ -141,12 +158,11 @@ class CanvasInteractListener(
                 .newline()
         }
 
-        val latitude: Double? = vehicle.latitude
-        val longitude: Double? = vehicle.longitude
+        val geographicCoordinates: Pair<Double, Double>? = vehicle.geographicCoordinates
         val bearing: Int? = vehicle.bearing
-        if (latitude != null && longitude != null && bearing != null) {
+        if (geographicCoordinates != null && bearing != null) {
             component.decoratedSubtext("Coordinates: ", TextDecoration.BOLD)
-                .subtext("$latitude, $longitude ")
+                .subtext("${geographicCoordinates.first}, ${geographicCoordinates.second} ")
                 .subtext("(")
                 .decoratedSubtext("Bearing: ", TextDecoration.BOLD)
                 .subtext("$bearing°")
@@ -225,6 +241,65 @@ class CanvasInteractListener(
             OccupancyStatus.FULL -> NamedTextColor.DARK_RED
             OccupancyStatus.NOT_ACCEPTING_PASSENGERS -> NamedTextColor.GRAY
             OccupancyStatus.NO_DATA_AVAILABLE -> NamedTextColor.GRAY
+        }
+    }
+
+    private fun handleRoutesInteract(player: Player, routes: List<CanvasRouteDto>) {
+        val components: MutableList<Component> = mutableListOf(Component.newline())
+        components.addAll(routes.map { formatRouteComponent(it) })
+
+        val summary = if (routes.size == 1) {
+            "There is ${routes.size} total route at this location."
+        } else {
+            "There are ${routes.size} total routes at this location."
+        }
+        components.add(Component.text(summary))
+
+        components.forEach { component ->
+            player.sendMessage(component)
+        }
+    }
+
+    private fun formatRouteComponent(route: CanvasRouteDto): Component {
+        val component = Component.text()
+
+        val longName: String = route.longName
+        component.decoratedText("Route: ", TextDecoration.BOLD)
+            .coloredText(longName, getRouteTextColor(route.id))
+            .newline()
+
+        val description: String = route.description
+        component.decoratedSubtext("Description: ", TextDecoration.BOLD)
+            .subtext(description)
+            .newline()
+
+        val type: RouteType = route.type
+        component.decoratedSubtext("Type: ", TextDecoration.BOLD)
+            .subtext(getRouteTypeText(type))
+            .newline()
+
+        val directionDestinations: List<String>? = route.directionDestinations
+        val directionNames: List<String>? = route.directionNames
+        if (directionDestinations != null && directionNames != null) {
+            component.decoratedSubtext("Destinations:", TextDecoration.BOLD)
+                .newline()
+            for (i in directionDestinations.indices) {
+                component.decoratedSubtext("  - ${directionNames[i]}: ", TextDecoration.BOLD)
+                    .subtext(directionDestinations[i])
+                    .newline()
+            }
+        }
+
+        return component.build()
+    }
+
+    private fun getRouteTypeText(type: RouteType): String {
+        return when (type) {
+            RouteType.LIGHT_RAIL -> "Light Rail"
+            RouteType.HEAVY_RAIL -> "Heavy Rail"
+            RouteType.COMMUTER_RAIL -> "Commuter Rail"
+            RouteType.BUS -> "Bus"
+            RouteType.FERRY -> "Ferry"
         }
     }
 }

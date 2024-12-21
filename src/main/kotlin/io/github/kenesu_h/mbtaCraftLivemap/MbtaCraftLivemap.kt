@@ -1,6 +1,8 @@
 package io.github.kenesu_h.mbtaCraftLivemap
 
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.PluginConfigDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.PluginConfigDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasDirection
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.RouteDto
 import io.github.kenesu_h.mbtaCraftLivemap.exception.MissingApiKeyException
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.World
@@ -25,7 +27,14 @@ class MbtaCraftLivemap : JavaPlugin() {
             return
         }
 
+        val apiKey: String = pluginConfig.apiKey
         val environment: Environment = pluginConfig.environment
+        val originX: Int = pluginConfig.originX
+        val originY: Int = pluginConfig.originY
+        val originZ: Int = pluginConfig.originZ
+        val size: Int = pluginConfig.size
+        val direction: CanvasDirection = pluginConfig.direction
+
         val world: World? = Bukkit.getWorlds().find { it.environment == environment }
         if (world == null) {
             logger.severe("No world with environment $environment found!")
@@ -33,18 +42,21 @@ class MbtaCraftLivemap : JavaPlugin() {
             return
         }
 
-        val consumer = EventConsumer(apiKey = pluginConfig.apiKey, logger = logger)
+        val consumer = EventConsumer(apiKey = apiKey, logger = logger)
         executor.submit { consumer.consume() }
 
-        state = CanvasState(size = pluginConfig.size, logger = logger)
+        state = CanvasState(size = size, logger = logger)
+
+        val routes: List<RouteDto> = ApiService(apiKey = apiKey).getRoutes()
+        state.updateRoutes(routes)
 
         server.pluginManager.registerEvents(
             CanvasInteractListener(
-                originX = pluginConfig.originX,
-                originY = pluginConfig.originY,
-                originZ = pluginConfig.originZ,
-                size = pluginConfig.size,
-                direction = pluginConfig.direction,
+                originX = originX,
+                originY = originY,
+                originZ = originZ,
+                size = size,
+                direction = direction,
                 state = state,
             ),
             this
@@ -52,11 +64,11 @@ class MbtaCraftLivemap : JavaPlugin() {
 
         renderer = CanvasRenderer(
             world = world,
-            originX = pluginConfig.originX,
-            originY = pluginConfig.originY,
-            originZ = pluginConfig.originZ,
-            size = pluginConfig.size,
-            direction = pluginConfig.direction,
+            originX = originX,
+            originY = originY,
+            originZ = originZ,
+            size = size,
+            direction = direction,
             logger = logger
         )
 
@@ -64,7 +76,7 @@ class MbtaCraftLivemap : JavaPlugin() {
             this,
             Runnable {
                 state.updateVehicles(consumer.getVehicles())
-                renderer.render(state.vehicles)
+                renderer.render(state.getRoutes(), state.getVehicles())
             },
             0L,
             20L  // 20 ticks = 1 second

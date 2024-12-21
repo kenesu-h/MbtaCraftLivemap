@@ -1,8 +1,8 @@
 package io.github.kenesu_h.mbtaCraftLivemap
 
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.OccupancyStatus
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.OccupancyStatus
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.RevenueStatus
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.VehicleStopStatus
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleStopStatus
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.CarriageExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.ExternalEventDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.ExternalEventType
@@ -10,7 +10,7 @@ import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.relationship.Relati
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.relationship.RelationshipExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleAttributesExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleExternalDto
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleLinksExternalDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.LinksExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleRelationshipsExternalDto
 import java.io.BufferedReader
 import java.time.ZoneOffset
@@ -48,7 +48,7 @@ val resetEvent = ExternalEventDto(
                     ),
                 ),
             ),
-            links = VehicleLinksExternalDto(
+            links = LinksExternalDto(
                 self = "/vehicles/y1454"
             ),
             id = "y1454",
@@ -97,7 +97,7 @@ val updateEvent = ExternalEventDto(
                     ),
                 ),
             ),
-            links = VehicleLinksExternalDto(
+            links = LinksExternalDto(
                 self = "/vehicles/G-10073"
             ),
             id = "G-10073",

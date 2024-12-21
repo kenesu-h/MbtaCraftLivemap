@@ -1,4 +1,4 @@
-package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta
+package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle
 
 enum class OccupancyStatus {
     MANY_SEATS_AVAILABLE,

@@ -2,7 +2,7 @@ package io.github.kenesu_h.mbtaCraftLivemap
 
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.Constants
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.ExternalEventType
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.VehicleDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.ExternalEventDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleExternalDto
 import java.net.URI
@@ -18,11 +18,12 @@ class EventConsumer(
     private val vehicles = ConcurrentHashMap<String, VehicleDto>()
 
     fun consume() {
-        val apiUrl = URI.create("${Constants.API_URL}/vehicles").toURL()
-        val connection = (apiUrl.openConnection() as HttpsURLConnection).also {
+        val url = URI.create("${Constants.API_URL}/vehicles").toURL()
+        val connection = (url.openConnection() as HttpsURLConnection).also {
+            it.requestMethod = "GET"
             it.setRequestProperty("accept", "text/event-stream")
             it.setRequestProperty("x-api-key", apiKey)
-            it.connectTimeout = 10000
+            it.connectTimeout = 5000  // 5 seconds
             it.readTimeout = 0
             it.doInput = true
         }

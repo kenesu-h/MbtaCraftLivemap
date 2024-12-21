@@ -1,14 +1,16 @@
-package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta
+package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle
 
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.CarriageDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.RevenueStatus
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.Route
 import java.time.ZonedDateTime
 
 data class VehicleDto(
     val id: String,
     val occupancyStatus: OccupancyStatus?,
     val speed: Double?,
-    val latitude: Double?,
+    val coordinates: Pair<Double, Double>?,
     val bearing: Int?,
-    val longitude: Double?,
     val label: String?,
     val revenueStatus: RevenueStatus?,
     val updatedAt: ZonedDateTime?,

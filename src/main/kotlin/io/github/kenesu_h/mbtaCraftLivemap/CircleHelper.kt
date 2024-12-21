@@ -2,8 +2,12 @@ package io.github.kenesu_h.mbtaCraftLivemap
 
 class CircleHelper {
     companion object {
-        fun isPointInCircle(x: Int, y: Int, radius: Int): Boolean {
-            return (x * x) + (y * y) <= (radius * radius)
+        fun isPointInCircle(point: Pair<Int, Int>, radius: Int): Boolean {
+            return (point.first * point.first) + (point.second * point.second) <= (radius * radius)
+        }
+
+        fun isPointInCircle(point: Pair<Double, Double>, radius: Double): Boolean {
+            return (point.first * point.first) + (point.second * point.second) <= (radius * radius)
         }
     }
 }
