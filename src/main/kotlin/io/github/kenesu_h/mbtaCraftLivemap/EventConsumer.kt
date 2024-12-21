@@ -1,9 +1,9 @@
 package io.github.kenesu_h.mbtaCraftLivemap
 
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.Constants
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.ExternalEventType
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.EventType
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleDto
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.ExternalEventDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.EventExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleExternalDto
 import java.net.URI
 import java.util.concurrent.ConcurrentHashMap
@@ -35,7 +35,7 @@ class EventConsumer(
 
             while (true) {
                 try {
-                    val event: ExternalEventDto = reader.readEvent() ?: break
+                    val event: EventExternalDto = reader.readEvent() ?: break
                     consumeEvent(event)
                 } catch (e: Exception) {
                     logger.severe(e.message ?: "An unknown exception occurred while reading events.")
@@ -45,7 +45,7 @@ class EventConsumer(
         }
     }
 
-    private fun consumeEvent(event: ExternalEventDto) {
+    private fun consumeEvent(event: EventExternalDto) {
         val vehicleDtos: MutableList<VehicleDto> = emptyList<VehicleDto>().toMutableList()
         for (vehicle: VehicleExternalDto in event.vehicles) {
             try {
@@ -59,16 +59,16 @@ class EventConsumer(
 
         val numVehicles: Int = vehicles.size
         when (event.type) {
-            ExternalEventType.RESET -> {
+            EventType.RESET -> {
                 vehicles.clear()
                 vehicleDtos.forEach { vehicles[it.id] = it }
             }
 
-            ExternalEventType.ADD, ExternalEventType.UPDATE -> {
+            EventType.ADD, EventType.UPDATE -> {
                 vehicleDtos.forEach { vehicles[it.id] = it }
             }
 
-            ExternalEventType.REMOVE -> {
+            EventType.REMOVE -> {
                 vehicleDtos.forEach { vehicles.remove(it.id) }
             }
         }

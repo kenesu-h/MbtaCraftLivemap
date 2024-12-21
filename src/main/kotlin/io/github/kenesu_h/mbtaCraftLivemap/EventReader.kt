@@ -2,8 +2,8 @@ package io.github.kenesu_h.mbtaCraftLivemap
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.ExternalEventDto
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.ExternalEventType
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.EventExternalDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.EventType
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleExternalDto
 import java.io.BufferedReader
 import java.time.ZonedDateTime
@@ -12,14 +12,14 @@ class EventReader(private val reader: BufferedReader) {
     private val gson: Gson =
         GsonBuilder().registerTypeAdapter(ZonedDateTime::class.java, ZonedDateTimeAdapter()).create()
 
-    private var eventType: ExternalEventType? = null
+    private var eventType: EventType? = null
     private var eventData: String = ""
 
-    fun readEvent(): ExternalEventDto? {
+    fun readEvent(): EventExternalDto? {
         while (true) {
             val line: String? = reader.readLine()
 
-            val event: ExternalEventDto? = processLine(line ?: "")
+            val event: EventExternalDto? = processLine(line ?: "")
             if (event != null) {
                 return event
             }
@@ -32,11 +32,11 @@ class EventReader(private val reader: BufferedReader) {
         return null
     }
 
-    private fun processLine(line: String): ExternalEventDto? {
+    private fun processLine(line: String): EventExternalDto? {
         when {
             line.startsWith("event:") -> {
                 val externalType: String = line.removePrefix("event:").trim()
-                eventType = ExternalEventType.fromType(externalType)
+                eventType = EventType.fromType(externalType)
             }
 
             line.startsWith("data:") -> {
@@ -45,7 +45,7 @@ class EventReader(private val reader: BufferedReader) {
             }
 
             line.isEmpty() -> {
-                val event: ExternalEventDto? = eventType?.let { readEventData(it, eventData) }
+                val event: EventExternalDto? = eventType?.let { readEventData(it, eventData) }
 
                 eventType = null
                 eventData = ""
@@ -59,9 +59,9 @@ class EventReader(private val reader: BufferedReader) {
         return null
     }
 
-    private fun readEventData(type: ExternalEventType, data: String): ExternalEventDto {
+    private fun readEventData(type: EventType, data: String): EventExternalDto {
         val vehicles: List<VehicleExternalDto> = when (type) {
-            ExternalEventType.RESET -> {
+            EventType.RESET -> {
                 gson.fromJson(data, Array<VehicleExternalDto>::class.java).toList()
             }
 
@@ -70,7 +70,7 @@ class EventReader(private val reader: BufferedReader) {
             }
         }
 
-        return ExternalEventDto(
+        return EventExternalDto(
             type = type,
             vehicles = vehicles
         )

@@ -7,11 +7,11 @@ import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-class ExternalEventTypeTest {
+class EventTypeTest {
     @ParameterizedTest(name = "fromType ")
     @MethodSource("provideArgsForFromType")
-    fun `fromType returns mapped type`(type: String, expected: ExternalEventType) {
-        val actual = ExternalEventType.fromType(type)
+    fun `fromType returns mapped type`(type: String, expected: EventType) {
+        val actual = EventType.fromType(type)
         assertEquals(expected, actual)
     }
 
@@ -20,7 +20,7 @@ class ExternalEventTypeTest {
         assertFailsWith<IllegalArgumentException>(
             message = "No valid event type found for test.",
             block = {
-                ExternalEventType.fromType("test")
+                EventType.fromType("test")
             }
         )
     }
@@ -29,10 +29,10 @@ class ExternalEventTypeTest {
         @JvmStatic
         fun provideArgsForFromType(): List<Arguments> {
             return listOf(
-                Arguments.of("reset", ExternalEventType.RESET),
-                Arguments.of("add", ExternalEventType.ADD),
-                Arguments.of("update", ExternalEventType.UPDATE),
-                Arguments.of("remove", ExternalEventType.REMOVE)
+                Arguments.of("reset", EventType.RESET),
+                Arguments.of("add", EventType.ADD),
+                Arguments.of("update", EventType.UPDATE),
+                Arguments.of("remove", EventType.REMOVE)
             )
         }
     }

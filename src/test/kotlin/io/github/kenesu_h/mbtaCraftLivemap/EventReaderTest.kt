@@ -4,8 +4,8 @@ import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.OccupancyStatus
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.RevenueStatus
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleStopStatus
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.CarriageExternalDto
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.ExternalEventDto
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.ExternalEventType
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.EventExternalDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.EventType
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.relationship.RelationshipDataExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.relationship.RelationshipExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleAttributesExternalDto
@@ -21,8 +21,8 @@ import kotlin.test.assertEquals
 
 // This event was modified to only have one vehicle
 // This vehicle was originally a bus, but modified to be on the red line for the sake of example
-val resetEvent = ExternalEventDto(
-    type = ExternalEventType.RESET,
+val resetEvent = EventExternalDto(
+    type = EventType.RESET,
     vehicles = listOf(
         VehicleExternalDto(
             relationships = VehicleRelationshipsExternalDto(
@@ -70,8 +70,8 @@ val resetEvent = ExternalEventDto(
     )
 )
 
-val updateEvent = ExternalEventDto(
-    type = ExternalEventType.UPDATE,
+val updateEvent = EventExternalDto(
+    type = EventType.UPDATE,
     vehicles = listOf(
         VehicleExternalDto(
             relationships = VehicleRelationshipsExternalDto(
@@ -142,7 +142,7 @@ class EventReaderTest {
 
         val reader = EventReader(BufferedReader(data.reader()))
 
-        val actual: ExternalEventDto? = reader.readEvent()
+        val actual: EventExternalDto? = reader.readEvent()
         assertEquals(resetEvent, actual)
     }
 
@@ -159,10 +159,10 @@ class EventReaderTest {
 
         val reader = EventReader(BufferedReader(data.reader()))
 
-        val first: ExternalEventDto? = reader.readEvent()
+        val first: EventExternalDto? = reader.readEvent()
         assertEquals(resetEvent, first)
 
-        val second: ExternalEventDto? = reader.readEvent()
+        val second: EventExternalDto? = reader.readEvent()
         assertEquals(updateEvent, second)
     }
 
@@ -170,7 +170,7 @@ class EventReaderTest {
     fun `readEvent returns null when there is no data`() {
         val reader = EventReader(BufferedReader("".reader()))
 
-        val actual: ExternalEventDto? = reader.readEvent()
+        val actual: EventExternalDto? = reader.readEvent()
         assertEquals(null, actual)
     }
 }

@@ -1,6 +1,6 @@
 package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external
 
-enum class ExternalEventType(val type: String) {
+enum class EventType(val type: String) {
     RESET("reset"),
     ADD("add"),
     UPDATE("update"),
@@ -9,8 +9,8 @@ enum class ExternalEventType(val type: String) {
     companion object {
         @JvmStatic
         @Throws(IllegalArgumentException::class)
-        fun fromType(type: String): ExternalEventType {
-            val eventType: ExternalEventType? = entries.find { it.type == type }
+        fun fromType(type: String): EventType {
+            val eventType: EventType? = entries.find { it.type == type }
             if (eventType == null) {
                 throw IllegalArgumentException("No valid event type found for $type.")
             }
