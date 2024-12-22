@@ -1,6 +1,7 @@
 package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.route
 
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.RouteType
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.TransportationType
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.IncludableExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.LinksExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.Route
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.RouteDto
@@ -12,7 +13,7 @@ data class RouteExternalDto(
     val links: LinksExternalDto,
     val id: String,
     val attributes: RouteAttributesExternalDto
-) {
+) : IncludableExternalDto {
     fun toRouteDto(trips: List<TripDto>): RouteDto {
         return RouteDto(
             id = Route.fromId(id),
@@ -24,7 +25,7 @@ data class RouteExternalDto(
             shortName = attributes.shortName,
             longName = attributes.longName,
             textColor = attributes.textColor,
-            type = RouteType.fromId(attributes.type),
+            type = TransportationType.fromId(attributes.type),
             description = attributes.description,
             trips = trips
         )

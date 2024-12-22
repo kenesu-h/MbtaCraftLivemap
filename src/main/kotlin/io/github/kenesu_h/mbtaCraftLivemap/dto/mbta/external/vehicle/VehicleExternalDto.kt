@@ -1,5 +1,6 @@
 package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle
 
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.IncludableExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.Route
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.LinksExternalDto
@@ -10,11 +11,12 @@ data class VehicleExternalDto(
     val links: LinksExternalDto?,
     val id: String,
     val attributes: VehicleAttributesExternalDto?
-) {
+) : IncludableExternalDto {
     fun toVehicleDto(): VehicleDto {
         var route: Route? = null
         if (relationships != null) {
-            route = Route.fromId(relationships.route.data.id)
+            // Route relationships populate `data`
+            route = Route.fromId(relationships.route.data!!.id)
         }
 
         var coordinates: Pair<Double, Double>? = null

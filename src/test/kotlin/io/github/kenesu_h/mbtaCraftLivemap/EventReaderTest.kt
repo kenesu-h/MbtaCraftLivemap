@@ -12,6 +12,7 @@ import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleAttr
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.LinksExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleRelationshipsExternalDto
+import io.github.kenesu_h.mbtaCraftLivemap.event.EventReader
 import java.io.BufferedReader
 import java.time.ZoneOffset
 import java.time.ZonedDateTime

@@ -1,5 +1,6 @@
 package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.routePattern
 
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.IncludableExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.LinksExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.routePattern.PatternTypicality
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.routePattern.RoutePatternDto
@@ -10,7 +11,7 @@ data class RoutePatternExternalDto(
     val links: LinksExternalDto,
     val id: String,
     val attributes: RoutePatternAttributesExternalDto
-) {
+) : IncludableExternalDto {
     fun toRoutePatternDto(): RoutePatternDto {
         return RoutePatternDto(
             id = id,

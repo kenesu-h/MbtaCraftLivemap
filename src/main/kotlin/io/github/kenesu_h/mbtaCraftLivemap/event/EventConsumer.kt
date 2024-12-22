@@ -1,4 +1,4 @@
-package io.github.kenesu_h.mbtaCraftLivemap
+package io.github.kenesu_h.mbtaCraftLivemap.event
 
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.Constants
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.EventType

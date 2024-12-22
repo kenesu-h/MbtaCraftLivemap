@@ -4,6 +4,9 @@ import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.*
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.ShapeDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.RouteDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleDto
+import io.github.kenesu_h.mbtaCraftLivemap.math.CircleHelper
+import io.github.kenesu_h.mbtaCraftLivemap.math.CoordinateNormalizer
+import io.github.kenesu_h.mbtaCraftLivemap.math.LineHelper
 import java.util.logging.Logger
 
 class CanvasState(
@@ -24,12 +27,39 @@ class CanvasState(
         }
     }
 
+    fun getStopsAtPoint(point: Pair<Int, Int>): List<CanvasStopDto> {
+        val stopNames: MutableSet<String> = mutableSetOf()
+
+        return routes.fold(mutableListOf()) { accRoutes, nextRoute ->
+            accRoutes.addAll(
+                nextRoute.trips.fold(mutableListOf()) { accTrips, nextTrip ->
+                    accTrips.addAll(
+                        nextTrip.stops.filter { stop ->
+                            val canAdd = !stopNames.contains(stop.inner.name) && CircleHelper.isPointInCircle(
+                                Pair(
+                                    point.first - stop.coordinates.first,
+                                    point.second - stop.coordinates.second
+                                ),
+                                Constants.STOP_RADIUS
+                            )
+
+                            stopNames.add(stop.inner.name)
+                            canAdd
+                        }
+                    )
+                    accTrips
+                }
+            )
+            accRoutes
+        }
+    }
+
     fun getVehiclesAtPoint(point: Pair<Int, Int>): List<CanvasVehicleDto> {
         val filtered: MutableList<CanvasVehicleDto> = mutableListOf()
         for (vehicle: CanvasVehicleDto in vehicles) {
             val coordinates: Pair<Int, Int>? = vehicle.coordinates
             if (coordinates == null) {
-                logger.info("Filtered out vehicle ID ${vehicle.id} since it does not have coordinates.")
+                logger.info("Filtered out vehicle ID ${vehicle.inner.id} since it does not have coordinates.")
                 continue
             }
 
@@ -58,17 +88,20 @@ class CanvasState(
                     CanvasTripDto(
                         shape = CanvasShapeDto(
                             coordinates = newShape.coordinates.map { newCoordinates ->
-                                Pair(
-                                    normalizer.normalizeLongitude(newCoordinates.second),
-                                    normalizer.normalizeLatitude(newCoordinates.first)
-                                )
+                                normalizer.normalize(newCoordinates)
                             },
-                            shape = newTrip.shape
+                            inner = newTrip.shape
                         ),
-                        trip = newTrip,
+                        stops = newTrip.stops.map { newStop ->
+                            CanvasStopDto(
+                                coordinates = normalizer.normalize(newStop.coordinates),
+                                inner = newStop
+                            )
+                        },
+                        inner = newTrip
                     )
                 },
-                route = newRoute
+                inner = newRoute
             )
         }
     }
@@ -81,15 +114,12 @@ class CanvasState(
         vehicles = newVehicles.map {
             var coordinates: Pair<Int, Int>? = null
             if (it.coordinates != null) {
-                coordinates = Pair(
-                    normalizer.normalizeLongitude(it.coordinates.second),
-                    normalizer.normalizeLatitude(it.coordinates.first)
-                )
+                coordinates = normalizer.normalize(it.coordinates)
             }
 
             CanvasVehicleDto(
                 coordinates = coordinates,
-                vehicle = it
+                inner = it
             )
         }
     }

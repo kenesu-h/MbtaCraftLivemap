@@ -1,4 +1,4 @@
-package io.github.kenesu_h.mbtaCraftLivemap
+package io.github.kenesu_h.mbtaCraftLivemap.math
 
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.Constants
 
@@ -9,11 +9,10 @@ class CoordinateNormalizer(
     private val maxLongitude: Double = Constants.MAX_LONGITUDE,
     private val size: Int
 ) {
-    fun normalizeLatitude(latitude: Double): Int {
-        return ((latitude - minLatitude) / (maxLatitude - minLatitude) * size).toInt()
-    }
-
-    fun normalizeLongitude(longitude: Double): Int {
-        return ((longitude - minLongitude) / (maxLongitude - minLongitude) * size).toInt()
+    fun normalize(coordinates: Pair<Double, Double>): Pair<Int, Int> {
+        return Pair(
+            ((coordinates.second - minLongitude) / (maxLongitude - minLongitude) * size).toInt(),
+            ((coordinates.first - minLatitude) / (maxLatitude - minLatitude) * size).toInt()
+        )
     }
 }

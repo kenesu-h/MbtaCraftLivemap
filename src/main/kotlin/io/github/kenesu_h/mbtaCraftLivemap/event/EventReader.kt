@@ -1,7 +1,8 @@
-package io.github.kenesu_h.mbtaCraftLivemap
+package io.github.kenesu_h.mbtaCraftLivemap.event
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import io.github.kenesu_h.mbtaCraftLivemap.gson.ZonedDateTimeAdapter
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.EventExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.EventType
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleExternalDto

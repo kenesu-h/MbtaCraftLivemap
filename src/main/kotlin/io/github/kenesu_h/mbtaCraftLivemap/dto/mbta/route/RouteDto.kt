@@ -1,5 +1,6 @@
 package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route
 
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.TransportationType
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.trip.TripDto
 
 data class RouteDto(
@@ -12,7 +13,7 @@ data class RouteDto(
     val shortName: String,
     val longName: String,
     val textColor: String,
-    val type: RouteType,
+    val type: TransportationType,
     val description: String,
     val trips: List<TripDto>
 )

@@ -1,4 +1,4 @@
-package io.github.kenesu_h.mbtaCraftLivemap
+package io.github.kenesu_h.mbtaCraftLivemap.gson
 
 import com.google.gson.*
 import java.lang.reflect.Type
@@ -11,27 +11,19 @@ class ZonedDateTimeAdapter : JsonSerializer<ZonedDateTime>, JsonDeserializer<Zon
 
     @Override
     override fun serialize(
-        dateTime: ZonedDateTime?,
-        type: Type?,
-        jsonSerializationContext: JsonSerializationContext?
-    ): JsonElement? {
-        if (dateTime == null) {
-            return null
-        }
-
+        dateTime: ZonedDateTime,
+        type: Type,
+        jsonSerializationContext: JsonSerializationContext
+    ): JsonElement {
         return JsonPrimitive(dateTime.format(formatter))
     }
 
     @Override
     override fun deserialize(
-        jsonElement: JsonElement?,
-        type: Type?,
-        jsonDeserializationContext: JsonDeserializationContext?
-    ): ZonedDateTime? {
-        if (jsonElement == null) {
-            return null
-        }
-
+        jsonElement: JsonElement,
+        type: Type,
+        jsonDeserializationContext: JsonDeserializationContext
+    ): ZonedDateTime {
         return ZonedDateTime.parse(jsonElement.asJsonPrimitive.asString, formatter)
     }
 }

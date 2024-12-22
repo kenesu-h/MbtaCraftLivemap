@@ -8,8 +8,9 @@ object Constants {
     const val MIN_LONGITUDE = -71.264843
     const val MAX_LONGITUDE = -70.949545
 
-    const val VEHICLE_RADIUS = 2
     const val ROUTE_WEIGHT = 1
+    const val STOP_RADIUS = 2
+    const val VEHICLE_RADIUS = 1
 
     val BACKGROUND_MATERIAL = Material.GRAY_CONCRETE
 }
