@@ -2,9 +2,8 @@ package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external
 
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.CarriageDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.OccupancyStatus
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 class CarriageExternalDtoTest {
 

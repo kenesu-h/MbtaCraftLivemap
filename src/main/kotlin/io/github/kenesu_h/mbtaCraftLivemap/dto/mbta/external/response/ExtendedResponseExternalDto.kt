@@ -1,6 +1,8 @@
 package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.response
 
-class ExtendedResponseExternalDto<T, U>(
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.IncludableExternalDto
+
+class ExtendedResponseExternalDto<T>(
     val data: List<T>,
-    val included: List<U>
+    val included: List<IncludableExternalDto>
 )

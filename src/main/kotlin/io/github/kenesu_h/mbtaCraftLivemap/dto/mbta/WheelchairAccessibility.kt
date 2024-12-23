@@ -1,4 +1,4 @@
-package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.trip
+package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta
 
 enum class WheelchairAccessibility(val id: Int) {
     NO_INFORMATION(0),

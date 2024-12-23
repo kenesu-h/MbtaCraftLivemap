@@ -1,4 +1,4 @@
-package io.github.kenesu_h.mbtaCraftLivemap
+package io.github.kenesu_h.mbtaCraftLivemap.util
 
 class CircleHelper {
     companion object {

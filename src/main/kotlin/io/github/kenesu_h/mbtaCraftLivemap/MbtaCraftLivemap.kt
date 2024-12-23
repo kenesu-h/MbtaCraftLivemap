@@ -3,18 +3,19 @@ package io.github.kenesu_h.mbtaCraftLivemap
 import io.github.kenesu_h.mbtaCraftLivemap.dto.PluginConfigDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasDirection
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.RouteDto
+import io.github.kenesu_h.mbtaCraftLivemap.event.EventConsumer
 import io.github.kenesu_h.mbtaCraftLivemap.exception.MissingApiKeyException
-import org.bukkit.plugin.java.JavaPlugin
-import org.bukkit.World
+import io.github.kenesu_h.mbtaCraftLivemap.renderer.CanvasRenderer
 import org.bukkit.Bukkit
+import org.bukkit.World
 import org.bukkit.World.Environment
+import org.bukkit.plugin.java.JavaPlugin
 import java.util.concurrent.Executors
 
 class MbtaCraftLivemap : JavaPlugin() {
     private val executor = Executors.newSingleThreadExecutor()
     private lateinit var pluginConfig: PluginConfigDto
     private lateinit var state: CanvasState
-    private lateinit var renderer: CanvasRenderer
 
     override fun onEnable() {
         saveDefaultConfig()
@@ -62,21 +63,22 @@ class MbtaCraftLivemap : JavaPlugin() {
             this
         )
 
-        renderer = CanvasRenderer(
-            world = world,
-            originX = originX,
-            originY = originY,
-            originZ = originZ,
-            size = size,
-            direction = direction,
-            logger = logger
-        )
-
         server.scheduler.runTaskTimer(
             this,
             Runnable {
                 state.updateVehicles(consumer.getVehicles())
-                renderer.render(state.getRoutes(), state.getVehicles())
+
+                CanvasRenderer(
+                    world = world,
+                    originX = originX,
+                    originY = originY,
+                    originZ = originZ,
+                    size = size,
+                    direction = direction,
+                    routes = state.getRoutes(),
+                    vehicles = state.getVehicles(),
+                    logger = logger
+                ).render()
             },
             0L,
             20L  // 20 ticks = 1 second

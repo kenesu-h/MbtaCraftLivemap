@@ -1,10 +1,12 @@
 package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.trip
 
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.ShapeDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.WheelchairAccessibility
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.IncludableExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.LinksExternalDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.stop.StopDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.trip.BikesAllowed
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.trip.TripDto
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.trip.WheelchairAccessibility
 
 data class TripExternalDto(
     val type: String = "trip",
@@ -12,8 +14,8 @@ data class TripExternalDto(
     val links: LinksExternalDto,
     val id: String,
     val attributes: TripAttributesExternalDto
-) {
-    fun toTripDto(shape: ShapeDto): TripDto {
+) : IncludableExternalDto {
+    fun toTripDto(shape: ShapeDto, stops: List<StopDto>): TripDto {
         return TripDto(
             id = id,
             wheelchairAccessible = WheelchairAccessibility.fromId(attributes.wheelchairAccessible),
@@ -23,7 +25,8 @@ data class TripExternalDto(
             directionId = attributes.directionId,
             blockId = attributes.blockId,
             bikesAllowed = BikesAllowed.fromId(attributes.bikesAllowed),
-            shape = shape
+            shape = shape,
+            stops = stops
         )
     }
 }

@@ -8,7 +8,8 @@ enum class Route(val id: String) {
     GREEN_C("Green-C"),
     GREEN_D("Green-D"),
     GREEN_E("Green-E"),
-    BLUE("Blue");
+    BLUE("Blue"),
+    COMMUTER_RAIL_FAIRMOUNT("CR-Fairmount");
 
     companion object {
         @JvmStatic

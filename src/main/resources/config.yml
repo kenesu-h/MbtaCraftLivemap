@@ -4,7 +4,7 @@ canvas:
   environment: "NORMAL"  # Allowed values: NORMAL, NETHER, THE_END, CUSTOM
   origin:
     x: 0
-    y: 64
+    y: -60
     z: 0
-  size: 256
+  size: 380
   direction: "NORTH"  # Allowed values: NORTH, SOUTH, EAST, WEST

@@ -2,10 +2,10 @@ package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle
 
 import com.google.gson.annotations.SerializedName
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.CarriageDto
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.OccupancyStatus
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.RevenueStatus
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleStopStatus
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.CarriageExternalDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.OccupancyStatus
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleStopStatus
 import java.time.ZonedDateTime
 
 data class VehicleAttributesExternalDto(

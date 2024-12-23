@@ -1,4 +1,4 @@
-package io.github.kenesu_h.mbtaCraftLivemap
+package io.github.kenesu_h.mbtaCraftLivemap.extension
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
