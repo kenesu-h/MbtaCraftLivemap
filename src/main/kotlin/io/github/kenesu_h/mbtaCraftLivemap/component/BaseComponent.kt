@@ -14,6 +14,7 @@ abstract class BaseComponent {
             Route.ORANGE -> NamedTextColor.GOLD
             Route.GREEN_B, Route.GREEN_C, Route.GREEN_D, Route.GREEN_E -> NamedTextColor.GREEN
             Route.BLUE -> NamedTextColor.BLUE
+            Route.COMMUTER_RAIL_FAIRMOUNT -> NamedTextColor.DARK_PURPLE
         }
     }
 

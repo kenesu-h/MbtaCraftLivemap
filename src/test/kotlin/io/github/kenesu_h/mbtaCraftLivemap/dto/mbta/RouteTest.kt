@@ -36,7 +36,8 @@ class RouteTest {
                 Arguments.of("Green-B", Route.GREEN_B),
                 Arguments.of("Green-C", Route.GREEN_C),
                 Arguments.of("Green-D", Route.GREEN_D),
-                Arguments.of("Green-E", Route.GREEN_E)
+                Arguments.of("Green-E", Route.GREEN_E),
+                Arguments.of("CR-Fairmount", Route.COMMUTER_RAIL_FAIRMOUNT)
             )
         }
     }

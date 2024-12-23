@@ -50,12 +50,13 @@ class RouteRenderer(
             Route.ORANGE -> Material.ORANGE_TERRACOTTA
             Route.GREEN_B, Route.GREEN_C, Route.GREEN_D, Route.GREEN_E -> Material.GREEN_CONCRETE
             Route.BLUE -> Material.BLUE_CONCRETE
+            Route.COMMUTER_RAIL_FAIRMOUNT -> Material.PURPLE_CONCRETE
         }
     }
 
     private fun getStopMaterialFromRoute(route: Route): Material {
         return when (route) {
-            Route.RED, Route.MATTAPAN -> Material.PEARLESCENT_FROGLIGHT
+            Route.RED, Route.MATTAPAN, Route.COMMUTER_RAIL_FAIRMOUNT -> Material.PEARLESCENT_FROGLIGHT
             Route.ORANGE -> Material.OCHRE_FROGLIGHT
             Route.GREEN_B, Route.GREEN_C, Route.GREEN_D, Route.GREEN_E -> Material.VERDANT_FROGLIGHT
             Route.BLUE -> Material.SEA_LANTERN
