@@ -1,4 +1,4 @@
-package io.github.kenesu_h.mbtaCraftLivemap.math
+package io.github.kenesu_h.mbtaCraftLivemap.util
 
 class LineHelper {
     companion object {

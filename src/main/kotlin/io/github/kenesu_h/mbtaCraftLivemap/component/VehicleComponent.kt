@@ -1,12 +1,12 @@
 package io.github.kenesu_h.mbtaCraftLivemap.component
 
-import io.github.kenesu_h.mbtaCraftLivemap.*
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.CarriageDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.RevenueStatus
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.Route
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.OccupancyStatus
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleStopStatus
+import io.github.kenesu_h.mbtaCraftLivemap.extension.*
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.NamedTextColor

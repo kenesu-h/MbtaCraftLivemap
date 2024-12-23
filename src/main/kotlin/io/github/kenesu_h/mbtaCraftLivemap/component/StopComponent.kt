@@ -1,10 +1,10 @@
 package io.github.kenesu_h.mbtaCraftLivemap.component
 
-import io.github.kenesu_h.mbtaCraftLivemap.*
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.TransportationType
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.WheelchairAccessibility
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.stop.LocationType
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.stop.StopDto
+import io.github.kenesu_h.mbtaCraftLivemap.extension.*
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.TextDecoration

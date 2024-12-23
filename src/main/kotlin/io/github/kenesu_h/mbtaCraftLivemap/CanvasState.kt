@@ -4,9 +4,9 @@ import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.*
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.ShapeDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.RouteDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleDto
-import io.github.kenesu_h.mbtaCraftLivemap.math.CircleHelper
-import io.github.kenesu_h.mbtaCraftLivemap.math.CoordinateNormalizer
-import io.github.kenesu_h.mbtaCraftLivemap.math.LineHelper
+import io.github.kenesu_h.mbtaCraftLivemap.util.CircleHelper
+import io.github.kenesu_h.mbtaCraftLivemap.util.CoordinateNormalizer
+import io.github.kenesu_h.mbtaCraftLivemap.util.LineHelper
 import java.util.logging.Logger
 
 class CanvasState(

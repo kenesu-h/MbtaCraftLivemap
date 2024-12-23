@@ -1,4 +1,4 @@
-package io.github.kenesu_h.mbtaCraftLivemap.math
+package io.github.kenesu_h.mbtaCraftLivemap.util
 
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.Constants
 
