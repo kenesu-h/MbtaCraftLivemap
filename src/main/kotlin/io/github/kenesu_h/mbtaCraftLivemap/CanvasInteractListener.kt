@@ -46,6 +46,7 @@ class CanvasInteractListener(
                         "Toggled route visibility ${getOnOrOff(state.getVisibility().routes)}."
                     )
                 }
+
                 Material.REDSTONE_TORCH -> {
                     state.toggleStopsVisibility()
                     renderer.render()
@@ -53,6 +54,7 @@ class CanvasInteractListener(
                         "Toggled stop visibility ${getOnOrOff(state.getVisibility().stops)}."
                     )
                 }
+
                 Material.MINECART -> {
                     state.toggleVehiclesVisibility()
                     renderer.render()
@@ -60,6 +62,7 @@ class CanvasInteractListener(
                         "Toggled vehicle visibility ${getOnOrOff(state.getVisibility().vehicles)}."
                     )
                 }
+
                 else -> handleEntitiesInteract(player, block)
             }
         }
