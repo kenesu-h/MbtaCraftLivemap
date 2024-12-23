@@ -7,22 +7,13 @@ import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasDirection
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasRouteDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasStopDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasVehicleDto
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.*
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.Route
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.OccupancyStatus
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.RevenueStatus
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.TransportationType
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleStopStatus
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
-import java.time.ZonedDateTime
 
 class CanvasInteractListener(
     private val originX: Int,

@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.Constants
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.IncludableExternalDto
-import io.github.kenesu_h.mbtaCraftLivemap.gson.IncludableExternalDtoDeserializer
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.response.ExtendedResponseExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.route.RouteExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.routePattern.RoutePatternExternalDto
@@ -15,6 +14,7 @@ import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.stop.StopExternalDt
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.trip.TripExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.Route
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.RouteDto
+import io.github.kenesu_h.mbtaCraftLivemap.gson.IncludableExternalDtoDeserializer
 import io.github.kenesu_h.mbtaCraftLivemap.gson.ZonedDateTimeAdapter
 import java.net.URI
 import java.net.URL
@@ -32,26 +32,23 @@ class ApiService(val apiKey: String) {
         val routeResponse = queryRoutes()
 
         val routes: List<RouteExternalDto> = routeResponse.data
-            .fold(mutableListOf()) {
-                acc: MutableList<RouteExternalDto>,
-                next: RouteExternalDto ->
+            .fold(mutableListOf()) { acc: MutableList<RouteExternalDto>,
+                                     next: RouteExternalDto ->
                 acc.add(next)
                 acc
             }
 
         val routePatterns: Map<String, RoutePatternExternalDto> = routeResponse.included
-            .fold(hashMapOf()) {
-                acc: HashMap<String, RoutePatternExternalDto>,
-                next: IncludableExternalDto ->
+            .fold(hashMapOf()) { acc: HashMap<String, RoutePatternExternalDto>,
+                                 next: IncludableExternalDto ->
                 next as RoutePatternExternalDto  // Route patterns are the only thing we included
                 acc[next.id] = next
                 acc
             }
 
         val routesToTripIds: Map<Route, Set<String>> = routePatterns.values
-            .fold(EnumMap(Route::class.java)) {
-                acc: EnumMap<Route, MutableSet<String>>,
-                next: RoutePatternExternalDto ->
+            .fold(EnumMap(Route::class.java)) { acc: EnumMap<Route, MutableSet<String>>,
+                                                next: RoutePatternExternalDto ->
                 val relationships: RoutePatternRelationshipsExternalDto = next.relationships
 
                 // Route relationships populate `data`
@@ -74,9 +71,8 @@ class ApiService(val apiKey: String) {
         val tripResponse = queryTrips(tripIds)
 
         val trips: Map<String, TripExternalDto> = tripResponse.data
-            .fold(hashMapOf()) {
-                acc: HashMap<String, TripExternalDto>,
-                next: TripExternalDto ->
+            .fold(hashMapOf()) { acc: HashMap<String, TripExternalDto>,
+                                 next: TripExternalDto ->
                 acc[next.id] = next
                 acc
             }

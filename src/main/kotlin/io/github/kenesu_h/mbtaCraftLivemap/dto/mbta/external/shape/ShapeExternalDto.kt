@@ -1,9 +1,9 @@
 package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.shape
 
-import io.github.kenesu_h.mbtaCraftLivemap.util.PolylineDecoder
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.ShapeDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.IncludableExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.LinksExternalDto
+import io.github.kenesu_h.mbtaCraftLivemap.util.PolylineDecoder
 
 data class ShapeExternalDto(
     val type: String = "shape",

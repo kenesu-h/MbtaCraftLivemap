@@ -1,12 +1,12 @@
 package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.trip
 
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.ShapeDto
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.LinksExternalDto
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.trip.BikesAllowed
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.trip.TripDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.WheelchairAccessibility
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.IncludableExternalDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.LinksExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.stop.StopDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.trip.BikesAllowed
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.trip.TripDto
 
 data class TripExternalDto(
     val type: String = "trip",

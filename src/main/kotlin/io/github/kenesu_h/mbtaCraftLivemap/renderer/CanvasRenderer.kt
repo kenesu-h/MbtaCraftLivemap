@@ -1,6 +1,9 @@
 package io.github.kenesu_h.mbtaCraftLivemap.renderer
 
-import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.*
+import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasDirection
+import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasRouteDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasVehicleDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.Constants
 import org.bukkit.World
 import java.util.logging.Logger
 

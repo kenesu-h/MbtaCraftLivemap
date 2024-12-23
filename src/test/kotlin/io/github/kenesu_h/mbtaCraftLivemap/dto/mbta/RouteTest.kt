@@ -1,10 +1,10 @@
 package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta
 
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.Route
-import kotlin.test.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 

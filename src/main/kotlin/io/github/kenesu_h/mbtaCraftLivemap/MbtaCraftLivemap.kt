@@ -6,10 +6,10 @@ import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.RouteDto
 import io.github.kenesu_h.mbtaCraftLivemap.event.EventConsumer
 import io.github.kenesu_h.mbtaCraftLivemap.exception.MissingApiKeyException
 import io.github.kenesu_h.mbtaCraftLivemap.renderer.CanvasRenderer
-import org.bukkit.plugin.java.JavaPlugin
-import org.bukkit.World
 import org.bukkit.Bukkit
+import org.bukkit.World
 import org.bukkit.World.Environment
+import org.bukkit.plugin.java.JavaPlugin
 import java.util.concurrent.Executors
 
 class MbtaCraftLivemap : JavaPlugin() {

@@ -38,9 +38,9 @@ class StopComponent(val stop: StopDto) : BaseComponent() {
         }
 
         val coordinates: Pair<Double, Double> = stop.coordinates
-            component.decoratedSubtext("Coordinates: ", TextDecoration.BOLD)
-                .subtext("${coordinates.first}, ${coordinates.second}")
-                .newline()
+        component.decoratedSubtext("Coordinates: ", TextDecoration.BOLD)
+            .subtext("${coordinates.first}, ${coordinates.second}")
+            .newline()
 
         val vehicleType: TransportationType? = stop.vehicleType
         if (vehicleType != null) {

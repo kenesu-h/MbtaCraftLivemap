@@ -1,17 +1,17 @@
 package io.github.kenesu_h.mbtaCraftLivemap
 
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.OccupancyStatus
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.RevenueStatus
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleStopStatus
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.CarriageExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.EventExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.EventType
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.LinksExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.relationship.RelationshipDataExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.relationship.RelationshipExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleAttributesExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleExternalDto
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.LinksExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleRelationshipsExternalDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.OccupancyStatus
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleStopStatus
 import io.github.kenesu_h.mbtaCraftLivemap.event.EventReader
 import java.io.BufferedReader
 import java.time.ZoneOffset

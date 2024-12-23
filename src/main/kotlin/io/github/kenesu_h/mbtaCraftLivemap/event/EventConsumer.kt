@@ -1,10 +1,10 @@
 package io.github.kenesu_h.mbtaCraftLivemap.event
 
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.Constants
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.EventType
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.EventExternalDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.EventType
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleExternalDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleDto
 import java.net.URI
 import java.util.concurrent.ConcurrentHashMap
 import java.util.logging.Logger

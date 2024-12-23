@@ -14,7 +14,11 @@ import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleExte
 import java.lang.reflect.Type
 
 class IncludableExternalDtoDeserializer : JsonDeserializer<IncludableExternalDto> {
-    override fun deserialize(jsonElement: JsonElement, type: Type, context: JsonDeserializationContext): IncludableExternalDto {
+    override fun deserialize(
+        jsonElement: JsonElement,
+        type: Type,
+        context: JsonDeserializationContext
+    ): IncludableExternalDto {
         val jsonObject = jsonElement.asJsonObject
 
         val jsonType = jsonObject.get("type").asString

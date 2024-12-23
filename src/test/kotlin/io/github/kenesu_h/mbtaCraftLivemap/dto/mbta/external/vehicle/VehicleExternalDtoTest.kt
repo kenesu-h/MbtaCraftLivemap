@@ -1,15 +1,14 @@
 package io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle
 
+import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.RevenueStatus
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.LinksExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.relationship.RelationshipDataExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.relationship.RelationshipExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.relationship.RelationshipLinksExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.Route
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.OccupancyStatus
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.RevenueStatus
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.vehicle.VehicleStopStatus
-
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
