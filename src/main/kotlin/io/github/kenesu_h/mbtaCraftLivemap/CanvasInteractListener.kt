@@ -3,17 +3,17 @@ package io.github.kenesu_h.mbtaCraftLivemap
 import io.github.kenesu_h.mbtaCraftLivemap.component.RouteComponent
 import io.github.kenesu_h.mbtaCraftLivemap.component.StopComponent
 import io.github.kenesu_h.mbtaCraftLivemap.component.VehicleComponent
-import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasDirection
-import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasRouteDto
-import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasStopDto
-import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasVehicleDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.*
+import io.github.kenesu_h.mbtaCraftLivemap.renderer.CanvasRenderer
 import net.kyori.adventure.text.Component
+import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.inventory.ItemStack
 
 class CanvasInteractListener(
     private val originX: Int,
@@ -22,6 +22,7 @@ class CanvasInteractListener(
     private val size: Int,
     private val direction: CanvasDirection,
     private val state: CanvasState,
+    private val renderer: CanvasRenderer
 ) : Listener {
     @EventHandler
     fun onPlayerInteract(event: PlayerInteractEvent) {
@@ -35,32 +36,39 @@ class CanvasInteractListener(
             return
         }
 
-        val canvasPoint: Pair<Int, Int> = Pair(
-            when (direction) {
-                CanvasDirection.NORTH -> originZ - block.z
-                CanvasDirection.SOUTH -> block.z - originZ
-                CanvasDirection.EAST -> block.x - originX
-                CanvasDirection.WEST -> originX - block.x
-            },
-            block.y - originY
-        )
-
-        val vehicles: List<CanvasVehicleDto> = state.getVehiclesAtPoint(canvasPoint)
-        if (vehicles.isNotEmpty()) {
-            handleVehiclesInteract(player, vehicles)
-            return
+        val item: ItemStack? = event.item
+        if (item != null) {
+            when (item.type) {
+                Material.COMPASS -> {
+                    state.toggleRoutesVisibility()
+                    renderer.render()
+                    player.sendMessage(
+                        "Toggled route visibility ${getOnOrOff(state.getVisibility().routes)}."
+                    )
+                }
+                Material.REDSTONE_TORCH -> {
+                    state.toggleStopsVisibility()
+                    renderer.render()
+                    player.sendMessage(
+                        "Toggled stop visibility ${getOnOrOff(state.getVisibility().stops)}."
+                    )
+                }
+                Material.MINECART -> {
+                    state.toggleVehiclesVisibility()
+                    renderer.render()
+                    player.sendMessage(
+                        "Toggled vehicle visibility ${getOnOrOff(state.getVisibility().vehicles)}."
+                    )
+                }
+                else -> handleEntitiesInteract(player, block)
+            }
         }
+    }
 
-        val stops: List<CanvasStopDto> = state.getStopsAtPoint(canvasPoint)
-        if (stops.isNotEmpty()) {
-            handleStopsInteract(player, stops)
-            return
-        }
-
-        val routes: List<CanvasRouteDto> = state.getRoutesAtPoint(canvasPoint)
-        if (routes.isNotEmpty()) {
-            handleRoutesInteract(player, routes)
-            return
+    private fun getOnOrOff(boolean: Boolean): String {
+        return when (boolean) {
+            true -> "on"
+            false -> "off"
         }
     }
 
@@ -89,6 +97,36 @@ class CanvasInteractListener(
                         block.y in originY until (originY + size) &&
                         block.z == originZ
             }
+        }
+    }
+
+    private fun handleEntitiesInteract(player: Player, block: Block) {
+        val canvasPoint: Pair<Int, Int> = Pair(
+            when (direction) {
+                CanvasDirection.NORTH -> originZ - block.z
+                CanvasDirection.SOUTH -> block.z - originZ
+                CanvasDirection.EAST -> block.x - originX
+                CanvasDirection.WEST -> originX - block.x
+            },
+            block.y - originY
+        )
+
+        val vehicles: List<CanvasVehicleDto> = state.getVehiclesAtPoint(canvasPoint)
+        if (vehicles.isNotEmpty()) {
+            handleVehiclesInteract(player, vehicles)
+            return
+        }
+
+        val stops: List<CanvasStopDto> = state.getStopsAtPoint(canvasPoint)
+        if (stops.isNotEmpty()) {
+            handleStopsInteract(player, stops)
+            return
+        }
+
+        val routes: List<CanvasRouteDto> = state.getRoutesAtPoint(canvasPoint)
+        if (routes.isNotEmpty()) {
+            handleRoutesInteract(player, routes)
+            return
         }
     }
 
