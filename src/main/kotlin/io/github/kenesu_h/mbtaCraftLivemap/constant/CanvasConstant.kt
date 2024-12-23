@@ -1,8 +1,8 @@
-package io.github.kenesu_h.mbtaCraftLivemap.dto.canvas
+package io.github.kenesu_h.mbtaCraftLivemap.constant
 
 import org.bukkit.Material
 
-object Constants {
+object CanvasConstant {
     const val MIN_LATITUDE = 42.176697
     const val MAX_LATITUDE = 42.491995
     const val MIN_LONGITUDE = -71.264843

@@ -3,7 +3,7 @@ package io.github.kenesu_h.mbtaCraftLivemap.renderer
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasDirection
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasRouteDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasVehicleDto
-import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.Constants
+import io.github.kenesu_h.mbtaCraftLivemap.constant.CanvasConstant
 import org.bukkit.World
 import java.util.logging.Logger
 
@@ -21,7 +21,7 @@ class CanvasRenderer(
     world, originX, originY, originZ, size, direction
 ) {
     override fun render() {
-        renderRectangle(size, size, Constants.BACKGROUND_MATERIAL)
+        renderRectangle(size, size, CanvasConstant.BACKGROUND_MATERIAL)
 
         routes.forEach {
             RouteRenderer(

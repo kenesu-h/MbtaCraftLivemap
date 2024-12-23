@@ -1,5 +1,6 @@
 package io.github.kenesu_h.mbtaCraftLivemap
 
+import io.github.kenesu_h.mbtaCraftLivemap.constant.CanvasConstant
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.*
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.ShapeDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.RouteDto
@@ -21,7 +22,7 @@ class CanvasState(
         return routes.filter { route ->
             route.trips.any { trip ->
                 trip.shape.coordinates.windowed(2).any { (start, end) ->
-                    LineHelper.isPointNearLine(point, start, end, Constants.ROUTE_WEIGHT)
+                    LineHelper.isPointNearLine(point, start, end, CanvasConstant.ROUTE_WEIGHT)
                 }
             }
         }
@@ -40,7 +41,7 @@ class CanvasState(
                                     point.first - stop.coordinates.first,
                                     point.second - stop.coordinates.second
                                 ),
-                                Constants.STOP_RADIUS
+                                CanvasConstant.STOP_RADIUS
                             )
 
                             stopNames.add(stop.inner.name)
@@ -66,7 +67,7 @@ class CanvasState(
             if (
                 CircleHelper.isPointInCircle(
                     Pair(point.first - coordinates.first, point.second - coordinates.second),
-                    Constants.VEHICLE_RADIUS
+                    CanvasConstant.VEHICLE_RADIUS
                 )
             ) {
                 filtered.add(vehicle)

@@ -3,7 +3,7 @@ package io.github.kenesu_h.mbtaCraftLivemap
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.Constants
+import io.github.kenesu_h.mbtaCraftLivemap.constant.MbtaConstant
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.IncludableExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.response.ExtendedResponseExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.route.RouteExternalDto
@@ -116,7 +116,7 @@ class ApiService(val apiKey: String) {
     private fun queryRoutes(): ExtendedResponseExternalDto<RouteExternalDto> {
         val url = URI.create(
             getUrlWithParams(
-                "${Constants.API_URL}/routes",
+                "${MbtaConstant.API_URL}/routes",
                 mapOf(
                     "filter[id]" to Route.entries.joinToString(",") { it.id },
                     "include" to "route_patterns",
@@ -142,7 +142,7 @@ class ApiService(val apiKey: String) {
     private fun queryTrips(tripIds: List<String>): ExtendedResponseExternalDto<TripExternalDto> {
         val url = URI.create(
             getUrlWithParams(
-                "${Constants.API_URL}/trips",
+                "${MbtaConstant.API_URL}/trips",
                 mapOf(
                     "filter[id]" to tripIds.joinToString(","),
                     "include" to "shape,stops",

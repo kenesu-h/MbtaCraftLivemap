@@ -1,6 +1,6 @@
 package io.github.kenesu_h.mbtaCraftLivemap.event
 
-import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.Constants
+import io.github.kenesu_h.mbtaCraftLivemap.constant.MbtaConstant
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.EventExternalDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.EventType
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.external.vehicle.VehicleExternalDto
@@ -18,7 +18,7 @@ class EventConsumer(
     private val vehicles = ConcurrentHashMap<String, VehicleDto>()
 
     fun consume() {
-        val url = URI.create("${Constants.API_URL}/vehicles").toURL()
+        val url = URI.create("${MbtaConstant.API_URL}/vehicles").toURL()
         val connection = (url.openConnection() as HttpsURLConnection).also {
             it.requestMethod = "GET"
             it.setRequestProperty("accept", "text/event-stream")

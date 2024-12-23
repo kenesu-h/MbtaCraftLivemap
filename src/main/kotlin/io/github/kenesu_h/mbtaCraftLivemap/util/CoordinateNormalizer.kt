@@ -1,12 +1,12 @@
 package io.github.kenesu_h.mbtaCraftLivemap.util
 
-import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.Constants
+import io.github.kenesu_h.mbtaCraftLivemap.constant.CanvasConstant
 
 class CoordinateNormalizer(
-    private val minLatitude: Double = Constants.MIN_LATITUDE,
-    private val maxLatitude: Double = Constants.MAX_LATITUDE,
-    private val minLongitude: Double = Constants.MIN_LONGITUDE,
-    private val maxLongitude: Double = Constants.MAX_LONGITUDE,
+    private val minLatitude: Double = CanvasConstant.MIN_LATITUDE,
+    private val maxLatitude: Double = CanvasConstant.MAX_LATITUDE,
+    private val minLongitude: Double = CanvasConstant.MIN_LONGITUDE,
+    private val maxLongitude: Double = CanvasConstant.MAX_LONGITUDE,
     private val size: Int
 ) {
     fun normalize(coordinates: Pair<Double, Double>): Pair<Int, Int> {

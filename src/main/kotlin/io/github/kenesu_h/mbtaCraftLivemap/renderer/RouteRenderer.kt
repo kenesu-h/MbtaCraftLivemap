@@ -2,7 +2,7 @@ package io.github.kenesu_h.mbtaCraftLivemap.renderer
 
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasDirection
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasRouteDto
-import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.Constants
+import io.github.kenesu_h.mbtaCraftLivemap.constant.CanvasConstant
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.Route
 import org.bukkit.Material
 import org.bukkit.World
@@ -24,7 +24,7 @@ class RouteRenderer(
         val stopNames: MutableSet<String> = mutableSetOf()
         route.trips.forEach { trip ->
             trip.shape.coordinates.windowed(2).forEach { (start, end) ->
-                renderLine(start, end, Constants.ROUTE_WEIGHT, material)
+                renderLine(start, end, CanvasConstant.ROUTE_WEIGHT, material)
             }
         }
 
@@ -33,7 +33,7 @@ class RouteRenderer(
                 if (!stopNames.contains(stop.inner.name)) {
                     renderCircle(
                         stop.coordinates,
-                        Constants.STOP_RADIUS,
+                        CanvasConstant.STOP_RADIUS,
                         getStopMaterialFromRoute(route.inner.id)
                     )
                 }
