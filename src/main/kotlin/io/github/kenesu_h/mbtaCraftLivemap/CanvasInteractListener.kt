@@ -3,7 +3,10 @@ package io.github.kenesu_h.mbtaCraftLivemap
 import io.github.kenesu_h.mbtaCraftLivemap.component.RouteComponent
 import io.github.kenesu_h.mbtaCraftLivemap.component.StopComponent
 import io.github.kenesu_h.mbtaCraftLivemap.component.VehicleComponent
-import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.*
+import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasDirection
+import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasRouteDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasStopDto
+import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasVehicleDto
 import io.github.kenesu_h.mbtaCraftLivemap.renderer.CanvasRenderer
 import net.kyori.adventure.text.Component
 import org.bukkit.Material

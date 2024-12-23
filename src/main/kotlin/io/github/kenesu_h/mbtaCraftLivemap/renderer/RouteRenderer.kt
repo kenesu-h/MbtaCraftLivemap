@@ -1,8 +1,8 @@
 package io.github.kenesu_h.mbtaCraftLivemap.renderer
 
+import io.github.kenesu_h.mbtaCraftLivemap.constant.CanvasConstant
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasDirection
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasRouteDto
-import io.github.kenesu_h.mbtaCraftLivemap.constant.CanvasConstant
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasVisibilityDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.Route
 import org.bukkit.Material
