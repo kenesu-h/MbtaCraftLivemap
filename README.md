@@ -6,6 +6,8 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Overview
 
+![In-game image of livemap](media/overview.png)
+
 - Rendered using data and real-time events from the [MBTA V3 API](https://www.mbta.com/developers/v3-api)
 - As a server plugin, no client-side mods are required to see the map
 - Right-click map elements - specifically for routes, stops, and vehicles - to view their data in chat
@@ -22,6 +24,7 @@ visualize and interact with transit data.
 1. Drag and drop the plugin JAR into the `plugins` folder at the root of your Paper server directory
 2. In `plugins/MbtaCraftLivemap/config.yml`, set `api.key` to your MBTA V3 API key
    - You can request one for free at [their portal](https://api-v3.mbta.com/)
+3. The plugin will automatically render the map as the server runs
 
 ## Build
 
