@@ -17,6 +17,7 @@ class CanvasState(
     private val normalizer = CoordinateNormalizer(size = size)
     private var routes: List<CanvasRouteDto> = emptyList()
     private var vehicles: List<CanvasVehicleDto> = emptyList()
+    private var visibility = CanvasVisibilityDto()
 
     fun getRoutesAtPoint(point: Pair<Int, Int>): List<CanvasRouteDto> {
         return routes.filter { route ->
@@ -123,5 +124,21 @@ class CanvasState(
                 inner = it
             )
         }
+    }
+
+    fun getVisibility(): CanvasVisibilityDto {
+        return visibility
+    }
+
+    fun toggleRoutesVisibility() {
+        visibility.routes = !visibility.routes
+    }
+
+    fun toggleStopsVisibility() {
+        visibility.stops = !visibility.stops
+    }
+
+    fun toggleVehiclesVisibility() {
+        visibility.vehicles = !visibility.vehicles
     }
 }

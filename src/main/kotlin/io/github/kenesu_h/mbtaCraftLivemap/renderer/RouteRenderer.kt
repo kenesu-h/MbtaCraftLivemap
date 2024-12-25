@@ -1,8 +1,9 @@
 package io.github.kenesu_h.mbtaCraftLivemap.renderer
 
+import io.github.kenesu_h.mbtaCraftLivemap.constant.CanvasConstant
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasDirection
 import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasRouteDto
-import io.github.kenesu_h.mbtaCraftLivemap.constant.CanvasConstant
+import io.github.kenesu_h.mbtaCraftLivemap.dto.canvas.CanvasVisibilityDto
 import io.github.kenesu_h.mbtaCraftLivemap.dto.mbta.route.Route
 import org.bukkit.Material
 import org.bukkit.World
@@ -14,31 +15,37 @@ class RouteRenderer(
     originZ: Int,
     size: Int,
     direction: CanvasDirection,
-    private val route: CanvasRouteDto
+    private val route: CanvasRouteDto,
+    private val visibility: CanvasVisibilityDto
 ) : BaseRenderer(
     world, originX, originY, originZ, size, direction
 ) {
     override fun render() {
         val material: Material = getRouteMaterialFromRoute(route.inner.id)
 
-        val stopNames: MutableSet<String> = mutableSetOf()
-        route.trips.forEach { trip ->
-            trip.shape.coordinates.windowed(2).forEach { (start, end) ->
-                renderLine(start, end, CanvasConstant.ROUTE_WEIGHT, material)
+        if (visibility.routes) {
+            route.trips.forEach { trip ->
+                trip.shape.coordinates.windowed(2).forEach { (start, end) ->
+                    renderLine(start, end, CanvasConstant.ROUTE_WEIGHT, material)
+                }
             }
         }
 
-        route.trips.forEach { trip ->
-            trip.stops.forEach { stop ->
-                if (!stopNames.contains(stop.inner.name)) {
-                    renderCircle(
-                        stop.coordinates,
-                        CanvasConstant.STOP_RADIUS,
-                        getStopMaterialFromRoute(route.inner.id)
-                    )
-                }
+        if (visibility.stops) {
+            val stopNames: MutableSet<String> = mutableSetOf()
 
-                stopNames.add(stop.inner.name)
+            route.trips.forEach { trip ->
+                trip.stops.forEach { stop ->
+                    if (!stopNames.contains(stop.inner.name)) {
+                        renderCircle(
+                            stop.coordinates,
+                            CanvasConstant.STOP_RADIUS,
+                            getStopMaterialFromRoute(route.inner.id)
+                        )
+                    }
+
+                    stopNames.add(stop.inner.name)
+                }
             }
         }
     }

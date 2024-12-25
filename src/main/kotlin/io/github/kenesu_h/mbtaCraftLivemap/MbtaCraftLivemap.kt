@@ -16,6 +16,7 @@ class MbtaCraftLivemap : JavaPlugin() {
     private val executor = Executors.newSingleThreadExecutor()
     private lateinit var pluginConfig: PluginConfigDto
     private lateinit var state: CanvasState
+    private lateinit var renderer: CanvasRenderer
 
     override fun onEnable() {
         saveDefaultConfig()
@@ -51,6 +52,17 @@ class MbtaCraftLivemap : JavaPlugin() {
         val routes: List<RouteDto> = ApiService(apiKey = apiKey).getRoutes()
         state.updateRoutes(routes)
 
+        renderer = CanvasRenderer(
+            world = world,
+            originX = originX,
+            originY = originY,
+            originZ = originZ,
+            size = size,
+            direction = direction,
+            state = state,
+            logger = logger,
+        )
+
         server.pluginManager.registerEvents(
             CanvasInteractListener(
                 originX = originX,
@@ -59,6 +71,7 @@ class MbtaCraftLivemap : JavaPlugin() {
                 size = size,
                 direction = direction,
                 state = state,
+                renderer = renderer,
             ),
             this
         )
@@ -67,18 +80,7 @@ class MbtaCraftLivemap : JavaPlugin() {
             this,
             Runnable {
                 state.updateVehicles(consumer.getVehicles())
-
-                CanvasRenderer(
-                    world = world,
-                    originX = originX,
-                    originY = originY,
-                    originZ = originZ,
-                    size = size,
-                    direction = direction,
-                    routes = state.getRoutes(),
-                    vehicles = state.getVehicles(),
-                    logger = logger
-                ).render()
+                renderer.render()
             },
             0L,
             20L  // 20 ticks = 1 second
